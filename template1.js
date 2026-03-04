@@ -1,162 +1,179 @@
 import { Ionicons } from "@expo/vector-icons";
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 
-export default function template1({ navigation }) {
-  const categorias = [
-    { id: "1", title: "Consultation", icon: "people-outline" },
-    { id: "2", title: "Dentist", icon: "medkit-outline" },
-    { id: "3", title: "Cardiologist", icon: "heart-outline" },
-    { id: "4", title: "Hospital", icon: "business-outline" },
-    { id: "5", title: "Emergency", icon: "car-outline" },
-    { id: "6", title: "Laboratory", icon: "flask-outline" },
+export default function TelaInicial({ navigation }) {
+
+  const categoriasDados = [
+    { id: "1", titulo: "Consultation", icone: "people-outline" },
+    { id: "2", titulo: "Dentist", icone: "medkit-outline" },
+    { id: "3", titulo: "Cardiologist", icone: "heart-outline" },
+    { id: "4", titulo: "Hospital", icone: "business-outline" },
+    { id: "5", titulo: "Emergency", icone: "car-outline" },
+    { id: "6", titulo: "Laboratory", icone: "flask-outline" },
   ];
 
-  const doutores = [
+  const medicosDados = [
     {
       id: "1",
-      name: "dr. Olivia Wilson",
-      specialty: "Consultant - Physiotherapy",
+      nome: "dr. Olivia Wilson",
+      especialidade: "Consultant - Physiotherapy",
     },
     {
       id: "2",
-      name: "dr. Jonathan Patterson",
-      specialty: "Consultant - Internal Medicine",
+      nome: "dr. Jonathan Patterson",
+      especialidade: "Consultant - Internal Medicine",
     },
   ];
 
-  const renderizarCategoria = ({ item }) => (
-    <View style={styles.categoryCard}>
-      <Ionicons name={item.icon} size={28} color="#5A6CF3" />
-      <Text style={styles.categoryText}>{item.title}</Text>
+  const renderizarCategoria = ({ item: elemento }) => (
+    <View style={estilos.cardCategoria}>
+      <Ionicons name={elemento.icone} size={28} color="#5A6CF3" />
+      <Text style={estilos.textoCategoria}>{elemento.titulo}</Text>
     </View>
   );
 
-  const renderizarDoutor = ({ item }) => (
-    <View style={styles.doctorCard}>
+  const renderizarMedico = ({ item: elemento }) => (
+    <View style={estilos.cardMedico}>
       <Ionicons name="person-circle" size={60} color="#ccc" />
 
       <View style={{ marginLeft: 12 }}>
-        <Text style={styles.doctorName}>{item.name}</Text>
-        <Text style={styles.specialty}>{item.specialty}</Text>
+        <Text style={estilos.nomeMedico}>{elemento.nome}</Text>
+        <Text style={estilos.especialidade}>{elemento.especialidade}</Text>
 
-        <View style={styles.ratingRow}>
+        <View style={estilos.linhaAvaliacao}>
           <Ionicons name="star" size={16} color="#FFC107" />
-          <Text style={styles.rating}>4.9 (37 Reviews)</Text>
+          <Text style={estilos.textoAvaliacao}>4.9 (37 Reviews)</Text>
         </View>
       </View>
     </View>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.profileRow}>
-          <View style={styles.profile}>
+    <SafeAreaView style={estilos.containerPrincipal}>
+
+      <View style={estilos.topo}>
+
+        <View style={estilos.linhaPerfil}>
+
+          <View style={estilos.blocoPerfil}>
             <Ionicons name="person-circle" size={50} color="#fff" />
             <View style={{ marginLeft: 10 }}>
-              <Text style={styles.welcome}>Welcome</Text>
-              <Text style={styles.name}>Dani Martinez</Text>
+              <Text style={estilos.textoBoasVindas}>Welcome</Text>
+              <Text style={estilos.nomeUsuario}>Dani Martinez</Text>
             </View>
           </View>
+
           <Pressable
-            style={styles.backButton}
+            style={estilos.botaoVoltar}
             onPress={() => navigation.goBack()}
           >
             <Ionicons name="arrow-back" size={20} color="#fff" />
-            <Text style={styles.backButtonText}>Voltar</Text>
+            <Text style={estilos.textoBotaoVoltar}>Voltar</Text>
           </Pressable>
+
         </View>
 
-        <View style={styles.searchBox}>
+        <View style={estilos.caixaBusca}>
           <TextInput
             placeholder="Search doctor"
             placeholderTextColor="#888"
-            style={styles.input}
+            style={estilos.inputBusca}
           />
           <Ionicons name="search" size={20} color="#5A6CF3" />
         </View>
+
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Categories</Text>
-          <Text style={styles.showAll}>Show All</Text>
+
+        <View style={estilos.cabecalhoSecao}>
+          <Text style={estilos.tituloSecao}>Categories</Text>
+          <Text style={estilos.verTodos}>Show All</Text>
         </View>
 
         <FlatList
-          data={categorias}
+          data={categoriasDados}
           renderItem={renderizarCategoria}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(registro) => registro.id}
           numColumns={3}
           scrollEnabled={false}
           contentContainerStyle={{ paddingHorizontal: 16 }}
         />
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Top doctors</Text>
+        <View style={estilos.cabecalhoSecao}>
+          <Text style={estilos.tituloSecao}>Top doctors</Text>
         </View>
 
         <FlatList
-          data={doutores}
-          renderItem={renderizarDoutor}
-          keyExtractor={(item) => item.id}
+          data={medicosDados}
+          renderItem={renderizarMedico}
+          keyExtractor={(registro) => registro.id}
           scrollEnabled={false}
           contentContainerStyle={{ paddingHorizontal: 16 }}
         />
 
         <View style={{ height: 100 }} />
+
       </ScrollView>
 
-      <View style={styles.bottomNav}>
-        <View style={styles.navItem}>
+      <View style={estilos.menuInferior}>
+
+        <View style={estilos.itemMenu}>
           <Ionicons name="home" size={24} color="#fff" />
-          <Text style={styles.navText}>Home</Text>
+          <Text style={estilos.textoMenu}>Home</Text>
         </View>
 
-        <View style={styles.navItem}>
+        <View style={estilos.itemMenu}>
           <Ionicons name="people-outline" size={24} color="#fff" />
-          <Text style={styles.navText}>Doctors</Text>
+          <Text style={estilos.textoMenu}>Doctors</Text>
         </View>
 
-        <View style={styles.navItem}>
+        <View style={estilos.itemMenu}>
           <Ionicons name="calendar-outline" size={24} color="#fff" />
-          <Text style={styles.navText}>Appointment</Text>
+          <Text style={estilos.textoMenu}>Appointment</Text>
         </View>
 
-        <View style={styles.navItem}>
+        <View style={estilos.itemMenu}>
           <Ionicons name="person-outline" size={24} color="#fff" />
-          <Text style={styles.navText}>Profile</Text>
+          <Text style={estilos.textoMenu}>Profile</Text>
         </View>
+
       </View>
+
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
+const estilos = StyleSheet.create({
+  containerPrincipal: {
     flex: 1,
     backgroundColor: "#F3F4F6",
   },
-
-  header: {
+  topo: {
     backgroundColor: "#5A6CF3",
     padding: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-
-  profileRow: {
+  linhaPerfil: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-
-  profile: {
+  blocoPerfil: {
     flexDirection: "row",
     alignItems: "center",
   },
-
-  backButton: {
+  botaoVoltar: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -164,25 +181,21 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
   },
-
-  backButtonText: {
+  textoBotaoVoltar: {
     color: "#fff",
     fontSize: 16,
     marginLeft: 4,
   },
-
-  welcome: {
+  textoBoasVindas: {
     color: "#fff",
     fontSize: 14,
   },
-
-  name: {
+  nomeUsuario: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },
-
-  searchBox: {
+  caixaBusca: {
     marginTop: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -191,31 +204,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-
-  input: {
+  inputBusca: {
     flex: 1,
     fontSize: 14,
   },
-
-  sectionHeader: {
+  cabecalhoSecao: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 16,
     marginTop: 20,
     marginBottom: 10,
   },
-
-  sectionTitle: {
+  tituloSecao: {
     fontSize: 16,
     fontWeight: "bold",
   },
-
-  showAll: {
+  verTodos: {
     color: "#5A6CF3",
     fontSize: 14,
   },
-
-  categoryCard: {
+  cardCategoria: {
     flex: 1,
     backgroundColor: "#fff",
     margin: 6,
@@ -224,14 +232,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  categoryText: {
+  textoCategoria: {
     marginTop: 8,
     fontSize: 12,
     textAlign: "center",
   },
-
-  doctorCard: {
+  cardMedico: {
     flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 12,
@@ -239,30 +245,25 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     alignItems: "center",
   },
-
-  doctorName: {
+  nomeMedico: {
     fontWeight: "bold",
     fontSize: 14,
   },
-
-  specialty: {
+  especialidade: {
     fontSize: 12,
     color: "#666",
     marginVertical: 4,
   },
-
-  ratingRow: {
+  linhaAvaliacao: {
     flexDirection: "row",
     alignItems: "center",
   },
-
-  rating: {
+  textoAvaliacao: {
     marginLeft: 4,
     fontSize: 12,
     color: "#666",
   },
-
-  bottomNav: {
+  menuInferior: {
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -272,12 +273,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 12,
   },
-
-  navItem: {
+  itemMenu: {
     alignItems: "center",
   },
-
-  navText: {
+  textoMenu: {
     color: "#fff",
     fontSize: 12,
     marginTop: 4,
